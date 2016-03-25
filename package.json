@@ -1,10 +1,10 @@
 {
   "name": "saxo-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A friendly way to configure a SAX parser",
   "repository": {
-    "type" : "git"
-  , "url" : "https://github.com/nch3v/saxo-parser"
+    "type": "git",
+    "url": "https://github.com/nch3v/saxo-parser"
   },
   "main": "src/index.js",
   "dependencies": {
