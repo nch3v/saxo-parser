@@ -1,0 +1,8 @@
+<root>
+    <anyNodeName anyAttr="anyValue">
+        <anyAnotherName>
+            text1
+            text2
+        </anyAnotherName>
+    </anyNodeName>
+</root>

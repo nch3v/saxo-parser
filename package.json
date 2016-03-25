@@ -1,0 +1,22 @@
+{
+  "name": "saxo-parser",
+  "version": "1.0.0",
+  "description": "A friendly way to configure a SAX parser",
+  "main": "src/index.js",
+  "dependencies": {
+    "sax": "^1.1.4"
+  },
+  "devDependencies": {
+    "eslint": "^2.4.0",
+    "jasmine": "^2.4.1"
+  },
+  "scripts": {
+    "test": "node ./node_modules/eslint/bin/eslint.js src/index.js  && node ./node_modules/jasmine/bin/jasmine.js"
+  },
+  "keywords": [
+    "sax",
+    "xml"
+  ],
+  "author": "Nicolas Chevolot",
+  "license": "ISC"
+}
