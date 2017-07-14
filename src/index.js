@@ -8,16 +8,16 @@ var options = {
   normalize: true
 };
 
-var SaxoParser = function (handler) {
+var SaxoParser = function(handler) {
   this.handlers = [handler];
 };
 
 var WILDCARD = "*";
 
-SaxoParser.prototype._attachEvents = function (parser) {
+SaxoParser.prototype._attachEvents = function(parser) {
   var self = this;
 
-  parser.onopentag = function (tag) {
+  parser.onopentag = function(tag) {
     var handler,
       parentHandler = self.getHandler.call(self);
 
@@ -36,20 +36,20 @@ SaxoParser.prototype._attachEvents = function (parser) {
     }
   };
 
-  parser.onclosetag = function (tagName) {
+  parser.onclosetag = function(tagName) {
     var handler = self.getHandler.call(self);
     var tag = handler._tag;
     if (tag && tag.name === tagName) {
       if (handler.hasOwnProperty("_close")) {
         handler._close(tag);
-      } else if (typeof(handler) === "function") {
+      } else if (typeof handler === "function") {
         handler.call(self, tag);
       }
       self.handlers.pop();
     }
   };
 
-  parser.ontext = function (text) {
+  parser.ontext = function(text) {
     var handler = self.getHandler.call(self);
     var tag = handler._tag;
     if (tag) {
@@ -63,37 +63,29 @@ SaxoParser.prototype._attachEvents = function (parser) {
   return parser;
 };
 
-SaxoParser.prototype.getHandler = function () {
+SaxoParser.prototype.getHandler = function() {
   return this.handlers.length > 0 ? this.handlers[this.handlers.length - 1] : {};
 };
 
-SaxoParser.prototype.parseStream = function (inputStream, done) {
+SaxoParser.prototype.parseStream = function(inputStream, done) {
   var parser = this._attachEvents(sax.createStream(true, options));
 
-  parser.on("error", function (e) {
-    // unhandled errors will throw, since this is a proper node
-    // event emitter.
-    console.error("error!", e);
-
-    // clear the error
-    parser.error = null;
-    parser.resume();
+  parser.on("error", function(err) {
+    done(err);
   });
 
-  parser.on("end", done || function () {
-  });
+  parser.on("end", done || function() {});
 
   inputStream.pipe(parser);
 };
 
-SaxoParser.prototype.parseFile = function (file, done) {
+SaxoParser.prototype.parseFile = function(file, done) {
   this.parseStream(fs.createReadStream(file), done);
 };
 
-SaxoParser.prototype.parseString = function (s) {
+SaxoParser.prototype.parseString = function(s) {
   var parser = this._attachEvents(sax.parser(true, options));
   parser.write(s).close();
 };
-
 
 module.exports = SaxoParser;
