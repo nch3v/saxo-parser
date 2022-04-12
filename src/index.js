@@ -60,6 +60,17 @@ SaxoParser.prototype._attachEvents = function (parser) {
     }
   };
 
+  parser.oncdata = function (data) {
+    var handler = self.getHandler.call(self);
+    var tag = handler._tag;
+    if (tag) {
+      tag.text = data;
+      if ("_text" in handler) {
+        handler._text(data);
+      }
+    }
+  };
+
   return parser;
 };
 

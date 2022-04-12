@@ -41,10 +41,6 @@ saxo.parseString('<root><myTag someProp="someValue"><mySubTag>Some</mySubTag><my
 
 The constructor function takes an object describing what function should be called when parsing each xml element.
 
-The entries of the object can be either a tag element name or a special function `_open`, `_text` or `_close`. None of the special method is mandatory and should be used depending of the object to be parsed.
+The entries of the object can be either a tag element name or a special function `_open`, `_text` (matches both text and cdata nodes) or `_close`. None of the special method is mandatory and should be used depending of the object to be parsed.
 
 The parser can then parse a string with `parseString`, an inputStream with `parseStream` or a file with `parseFile` 
-
-
-
-			'

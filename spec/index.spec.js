@@ -337,6 +337,30 @@ describe("SaxoParser", function() {
 				done();
 			});
 		});
+
+		it('should parse cdata section as text', function(done) {
+			var counter = 0;
+			var saxo = new SaxoParser({
+				pays: function(tag) {
+					counter++;
+					expect(tag.text).toBe("France");
+				},
+				region: function(tag) {
+					counter++;
+					expect(tag.text).toBe("Auvergne-Rhône-Alpes");
+				},
+				titre: function(tag) {
+					counter++;
+					expect(tag.text).toBe("Viva<br />Haute-Savoie");
+				}
+			});
+
+			saxo.parseFile(__dirname+"/assets/text_with_cdata.xml", function(error) {
+				expect(error).toBeFalsy();
+				expect(counter).toBe(3);
+				done();
+			});
+		});
 	});
 });
 
