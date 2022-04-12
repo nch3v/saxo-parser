@@ -316,7 +316,8 @@ describe("SaxoParser", function() {
 				}
 			});
 
-			saxo.parseFile(__dirname+"/assets/text.xml", function() {
+			saxo.parseFile(__dirname+"/assets/text.xml", function(error) {
+				expect(error).toBeFalsy();
 				expect(openHandlerCalled).toBe(true);
 				expect(parentFound).toBe(true);
 				expect(theText).toBe("text1 text2");
