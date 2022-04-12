@@ -69,15 +69,13 @@ SaxoParser.prototype.getHandler = function () {
 
 SaxoParser.prototype.parseStream = function (inputStream, done) {
   var parser = this._attachEvents(sax.createStream(true, options));
+  var errorCount = 0;
 
-  parser.on("error", function (e) {
-    // unhandled errors will throw, since this is a proper node
-    // event emitter.
-    console.error("error!", e);
-
-    // clear the error
-    parser.error = null;
-    parser.resume();
+  parser.on("error", function (err) {
+    if(errorCount===0) {
+      done(err, null);
+    }
+    errorCount++;
   });
 
   parser.on("end", done || function () {
@@ -90,9 +88,13 @@ SaxoParser.prototype.parseFile = function (file, done) {
   this.parseStream(fs.createReadStream(file), done);
 };
 
-SaxoParser.prototype.parseString = function (s) {
+SaxoParser.prototype.parseString = function (s, onerror) {
   var parser = this._attachEvents(sax.parser(true, options));
-  parser.write(s).close();
+  try {
+    parser.write(s).close();
+  } catch(err) {
+    onerror(err);
+  }
 };
 
 

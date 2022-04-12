@@ -276,6 +276,21 @@ describe("SaxoParser", function() {
 				expect(tagText).toBe(anyText);
 
 			});
+
+			it('should call the done callback with a non null error if the xml is malformed', function(done) {
+				var saxo = new SaxoParser({});
+				var error;
+				var counter = 0;
+
+				var cb = 
+
+				saxo.parseString("<WHAT!!></BUG>", function(error) {
+					counter ++;
+					expect(error).toBeDefined();
+					expect(counter).toBe(1);
+					done();
+				});
+			});
 		});
 	});
 
@@ -305,6 +320,19 @@ describe("SaxoParser", function() {
 				expect(openHandlerCalled).toBe(true);
 				expect(parentFound).toBe(true);
 				expect(theText).toBe("text1 text2");
+				done();
+			});
+		});
+
+		it('should call the done callback with a non null error if the xml is malformed', function(done) {
+			var saxo = new SaxoParser({});
+			var error;
+			var counter = 0;
+
+			saxo.parseFile(__dirname+"/assets/text_with_error.xml", function(error) {
+				counter++;
+				expect(error).toBeDefined();
+				expect(counter).toBe(1);
 				done();
 			});
 		});
