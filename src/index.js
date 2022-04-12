@@ -21,16 +21,16 @@ SaxoParser.prototype._attachEvents = function (parser) {
     var handler,
       parentHandler = self.getHandler.call(self);
 
-    if (parentHandler.hasOwnProperty(tag.name)) {
+    if (tag.name in parentHandler) {
       handler = parentHandler[tag.name];
-    } else if (parentHandler.hasOwnProperty(WILDCARD)) {
+    } else if (WILDCARD in parentHandler) {
       handler = parentHandler[WILDCARD];
     }
     if (handler) {
       handler._tag = tag;
       tag.parent = parentHandler._tag;
       self.handlers.push(handler);
-      if (handler.hasOwnProperty("_open")) {
+      if ("_open" in handler) {
         handler._open(tag, handler);
       }
     }
@@ -40,7 +40,7 @@ SaxoParser.prototype._attachEvents = function (parser) {
     var handler = self.getHandler.call(self);
     var tag = handler._tag;
     if (tag && tag.name === tagName) {
-      if (handler.hasOwnProperty("_close")) {
+      if ("_close" in handler) {
         handler._close(tag);
       } else if (typeof(handler) === "function") {
         handler.call(self, tag);
@@ -54,7 +54,7 @@ SaxoParser.prototype._attachEvents = function (parser) {
     var tag = handler._tag;
     if (tag) {
       tag.text = text;
-      if (handler.hasOwnProperty("_text")) {
+      if ("_text" in handler) {
         handler._text(tag);
       }
     }

@@ -8,10 +8,10 @@
   },
   "main": "src/index.js",
   "dependencies": {
-    "sax": "^1.1.4"
+    "sax": "^1.2.4"
   },
   "devDependencies": {
-    "eslint": "^2.4.0",
+    "eslint": "^8.13.0",
     "jasmine": "^2.4.1"
   },
   "scripts": {
