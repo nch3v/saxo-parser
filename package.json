@@ -1,6 +1,6 @@
 {
   "name": "saxo-parser",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A friendly way to configure a SAX parser",
   "repository": {
     "type": "git",
